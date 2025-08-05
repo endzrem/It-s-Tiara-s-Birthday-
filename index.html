@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Birthday Tiara!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -45,6 +46,12 @@
       font-size: 18px;
       margin-bottom: 20px;
     }
+    .handwritten {
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      line-height: 1.8;
+    }
+
   </style>
 </head>
 <body>
@@ -161,13 +168,13 @@
       },
       {
         title: "Lanjut ngechat setiap hari, sampe 1 informasi tentang kamu bikin aku ngerasa, WOAH I THINK I LIKE HER",
-        text: "You always know how to make everything fun. My fav moment of us being weird 💃",
+        text: "You always know how to make everything fun. Tanpa tiara yang juga aktif bertanya tentang aku, mungkin chat kita ga akan lanjut sejauh ini",
         src: "firstfell.jpg"
       },
       {
         title: "Five months of waiting, all worth it – the day we finally met",
         text: "Udah nungguin lama banget buat hari itu untuk datang. Selalu kepikiran sana-sini kalau akhirnya ketemu kamu harus ngapain. Hari yang paling aku tunggu sekaligus hari yang paling aku takutin. Alhamdulillah it went well!! 💖",
-        src: "insert-image-3.png"
+        src: "firstdate.jpg"
       },
       {
         title: "Recap  - tapi versi perjalanan kita sejauh ini",
@@ -178,21 +185,15 @@
         title: "From the bikini bottom of my heart:",
         text: `Halo tiara, <br><br>
         Selamat ulang tahun yang ke-22! 🎂🎉 <br>
-        I wish you the best of all this world could give. Semoga apa yang tiara impikan, selama itu baik, semuanya dapat terwujud. Semoga tiara dikelilingin oleh orang-orang baik,<br>
-        dicintai dan disayangi oleh banyak orang, semakin dekat dengan teman dan keluarga. Semoga kedepannya juga tiara bisa menjadi pribadi yang lebih baik, menjadi manusia yang<br>
-        selalu ingat sama Allah, rajin beribadah, dan semua doanya dikabulkan sama Allah SWT, aminnn yra. Oh iyaa, semoga kuliahnya lancar yaa, semangat cantik i know you'll do<br>
-        great. Aku doain kedepannya tiara juga bisa melanjutkan melakukan hal-hal yang tiara suka, semakin bahagia di hidup ini, dan semoga setiap langkah yang tiara ambil bisa me-<br>
-        mbawa berkah untuk orang-orang di sekitar kamu.<br>
+        I wish you the best of all this world could give. Semoga apa yang tiara impikan, selama itu baik, semuanya dapat terwujud. Semoga tiara dikelilingin oleh orang-orang baik, dicintai dan disayangi oleh banyak orang, semakin dekat dengan teman dan keluarga. Semoga kedepannya juga tiara bisa menjadi pribadi yang lebih baik, menjadi manusia yang selalu ingat sama Allah, rajin beribadah, dan semua doanya dikabulkan sama Allah SWT, aminnn yra. Oh iyaa, semoga kuliahnya lancar yaa, semangat cantik i know you'll do great. Aku doain kedepannya tiara juga bisa melanjutkan melakukan hal-hal yang tiara suka, semakin bahagia di hidup ini, dan semoga setiap langkah yang tiara ambil bisa membawa berkah untuk orang-orang di sekitar kamu.<br>
         <br>
-        Selama 6 bulan terakhir, setiap hari aku merasa beruntung bisa mengenal kamu, dari awal ngechat, awal call, awal nonton wall-e sekaligus vc, awal sleepcall, awal jalan,<br>
-        sampe akhirnya jadi pacar hehe. Sebelum aku kenal kamu, aku ga pernah kepikiran bahwa dalam waktu dekat aku akan menjalani hidup seperti ini dan sekarang aku ngerasa sangat<br>
-        happy dan bersyukur bisa bertemu tiara. You constantly mendorong aku untuk menjadi orang yang lebih baik dan aku sangat bersyukur. Tiara, terima kasih ya sudah mau menjadi<br>
-        tempat nyaman untuk aku, for years i've been hiding my soft side just to pretend that I'm strong and I have no problem whatsoever in life when there are plenty of it. I promise<br>
-        that I will do my best to bring you as much happiness as you have brought into my life.<br>
+        Selama 6 bulan terakhir, setiap hari aku merasa beruntung bisa mengenal kamu, dari awal ngechat, awal call, awal nonton wall-e sekaligus vc, awal sleepcall, awal jalan, sampe akhirnya jadi pacar hehe. Sebelum aku kenal kamu, aku ga pernah kepikiran bahwa dalam waktu dekat aku akan menjalani hidup seperti ini dan sekarang aku ngerasa sangat happy dan bersyukur bisa bertemu tiara. You constantly mendorong aku untuk menjadi orang yang lebih baik dan aku sangat bersyukur. Tiara, terima kasih ya sudah mau menjadi tempat nyaman untuk aku, for years i've been hiding my soft side just to pretend that I'm strong and I have no problem whatsoever in life when there are plenty of it. I promise that I will do my best to bring you as much happiness as you have brought into my life.<br>
         <br>
         You are the smile I look for in every sunrise, the peace I find in every sunset.<br>
-        Thank you for being mine. I hope this birthday brings you as much happiness as you have brought into my life. I love you Tiara 💖`,
-        src: "insert-image-4.png"
+        Thank you for being mine. I hope this birthday brings you as much happiness as you have brought into my life. I love you Tiara 💖<br>
+        <br>
+        Endrian`,
+        src: "ily.jpg"
       }
     ];
 
@@ -213,6 +214,12 @@
 
       titleEl.textContent = slide.title;
       textEl.innerHTML = slide.text;
+      // Apply handwritten font only on slide 5 (index 4)
+      if (index === 4) {
+        textEl.classList.add('handwritten');
+      } else {
+        textEl.classList.remove('handwritten');
+      }
 
       if (slide.src.endsWith('.mp4')) {
         container.innerHTML = `

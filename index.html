@@ -38,29 +38,39 @@
 
   <div id="step1" class="step">
     <h2>STOPPPPPPP!! WHO ARE YOU??!</h2>
+    <p>Hint: Nama lengkap</p>
     <input type="text" id="nameInput" placeholder="Enter your name">
     <br>
-    <button onclick="nextStep(2)">Next</button>
+    <button onclick="checkName()">Submit</button>
     <br><br>
     <img src="who-are-you-meme.jpg" alt="who are you">
   </div>
 
   <div id="step2" class="step hidden">
-    <h2>Are you sure it's really you?</h2>
-    <input type="text" id="confirmName" placeholder="Confirm your name">
-    <br>
-    <button onclick="nextStep(3)">Next</button>
+    <h2>Tiaraaa? Is that really youu ??</h2>
+    <button onclick="chooseYes()">Yes</button>
+    <button onclick="chooseNo()">No</button>
+  </div>
+
+  <div id="imposter" class="step hidden">
+    <h2>IMPOSTOR!!! GO AWAYY!!</h2>
+    <div class="meme">
+        <img src="images/imposter-meme.png" alt="Imposter meme" style="width:100%">
+    </div>
   </div>
 
   <div id="step3" class="step hidden">
-    <h2>What's your boyfriend's name?</h2>
-    <input type="text" id="boyfriendName" placeholder="His name is...">
+    <h2>Really? Confirm your identity by typing your boyfriend's name!</h2>
+    <input type="text" id="bfNameInput" placeholder="Masukkan nama pacarmu">
     <br>
-    <button onclick="nextStep(4)">Next</button>
+    <button onclick="checkBoyfriend()">Submit</button>
   </div>
 
   <div id="step4" class="step hidden">
-    <h2>Alright... Click below if you're ready.</h2>
+    <h2>Woaahhhh, It's really youu!! I have something for you :D</h2>
+    <div class="meme">
+      <img src="images/its-you-meme.png" alt="It's you meme" style="width:100%">
+    </div>
     <button onclick="nextStep(5)">Reveal the Letter</button>
   </div>
 
@@ -83,6 +93,36 @@
   </div>
 
   <script>
+    function checkName() {
+      const input = document.getElementById('nameInput').value.trim().toLowerCase();
+      if (input === 'larasati tiara rachim') {
+        document.getElementById('step2').classList.remove('hidden');
+      } else {
+        alert("HAH? WHO ARE YOU? I DONT KNOW YOU!!");
+      }
+    }
+
+    function chooseYes() {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step3').classList.remove('hidden');
+    }
+
+    function chooseNo() {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('imposter').classList.remove('hidden');
+    }
+
+    function checkBoyfriend() {
+      const input = document.getElementById('bfNameInput').value.trim().toLowerCase();
+      const validNames = ['endrian', 'endrian putra', 'endrian putra hendrawan'];
+      if (validNames.includes(input)) {
+        document.getElementById('step3').classList.add('hidden');
+        document.getElementById('step4').classList.remove('hidden');
+      } else {
+        alert("Nama siapa itu? Hayo ngaku!! 😤");
+      }
+    }
+
     let currentSlide = 0;
     const slides = [
       "insert-image-1.png",

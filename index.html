@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday Tiara!</title>
   <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
   <style>
@@ -11,62 +11,122 @@
       background-color: #fff0f5;
       text-align: center;
       padding: 30px;
+      overflow-x: hidden;
+      animation: fadeIn 2s ease-in;
     }
-    .hidden {
-      display: none;
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
-    .step {
-      margin-top: 30px;
-    }
+
+    .hidden { display: none; }
+    .step { margin-top: 30px; }
+
     input[type="text"] {
       padding: 10px;
       width: 300px;
       font-size: 16px;
     }
+
     button {
       margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      transition: transform 0.2s ease;
     }
+
+    button:hover {
+      transform: scale(1.05);
+      background-color: #ff85c1;
+    }
+
     #slideContainer {
       max-width: 90%;
       margin: auto;
     }
+
     img, video {
       width: 90%;
       height: auto;
     }
+
     .slide-title {
       font-size: 24px;
       font-weight: bold;
       margin-bottom: 10px;
     }
+
     .slide-body {
       font-size: 18px;
       margin-bottom: 20px;
     }
+
     .handwritten {
       font-family: 'Caveat', cursive;
       font-size: 22px;
       line-height: 1.8;
       text-align: justify;
     }
+
     #slideContainer img {
-      width: auto;              /* or set width: 100% for full width */
+      width: auto;
       max-width: 100%;
-      height: 300px;            /* Or adjust to desired height */
-      object-fit: contain;      /* use 'cover' to fill the area, 'contain' to fit whole image */
+      height: 300px;
+      object-fit: contain;
       border-radius: 12px;
       margin-bottom: 20px;
       display: block;
       margin-left: auto;
       margin-right: auto;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
+    /* Floating Hearts Animation */
+    .heart {
+      position: fixed;
+      top: -20px;
+      font-size: 24px;
+      animation: floatHearts 10s linear infinite;
+      color: pink;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes floatHearts {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Background music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="bgmusic.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Floating hearts container -->
+  <script>
+    // Create floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerText = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 10000);
+    }
+    setInterval(createHeart, 700);
+  </script>
 
   <div id="step1" class="step">
     <h2>STOPPPPPPP!! WHO ARE YOU??!</h2>
@@ -74,8 +134,7 @@
     <div class="meme">
       <img src="images/who-are-you-meme.jpg" alt="It's you meme" style="width:100%">
     </div>
-    <input type="text" id="nameInput" placeholder="Enter your name">
-    <br>
+    <input type="text" id="nameInput" placeholder="Enter your name"><br>
     <button onclick="checkName()">Submit</button>
   </div>
 
@@ -94,8 +153,7 @@
 
   <div id="step3" class="step hidden">
     <h2>Really? Confirm your identity by typing your boyfriend's name!</h2>
-    <input type="text" id="bfNameInput" placeholder="Masukkan nama pacarmu">
-    <br>
+    <input type="text" id="bfNameInput" placeholder="Masukkan nama pacarmu"><br>
     <button onclick="checkBoyfriend()">Submit</button>
   </div>
 
@@ -227,7 +285,6 @@
 
       titleEl.textContent = slide.title;
       textEl.innerHTML = slide.text;
-      // Apply handwritten font only on slide 5 (index 4)
       if (index === 4) {
         textEl.classList.add('handwritten');
       } else {
@@ -239,8 +296,7 @@
           <video controls autoplay>
             <source src="${slide.src}" type="video/mp4">
             Your browser does not support the video tag.
-          </video>
-        `;
+          </video>`;
       } else {
         container.innerHTML = `<img src="${slide.src}" alt="Slide ${index + 1}">`;
       }

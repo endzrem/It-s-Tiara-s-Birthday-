@@ -1,115 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tiara's 22nd Birthday Card</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Tiara!</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
       text-align: center;
-      padding: 40px;
-      background-color: #fffafc;
-    }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      font-size: 16px;
+      padding: 30px;
     }
     .hidden {
       display: none;
     }
-    .meme {
+    .step {
+      margin-top: 30px;
+    }
+    input[type="text"] {
+      padding: 10px;
       width: 300px;
-      margin: 20px auto;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #slides img {
+      max-width: 90%;
+      height: auto;
     }
   </style>
 </head>
 <body>
 
-  <h1>STOPPPP!! WHO ARE YOU??!</h1>
-  <p>Hint: Nama lengkap</p>
-  <input type="text" id="nameInput" placeholder="Masukkan namamu di sini">
-  <button onclick="checkName()">Submit</button>
-
-  <div id="step2" class="hidden">
-    <div class="meme">
-      <img src="who-are-you-meme.jpg" alt="Who are you meme" width="300">
-    </div>
-    <h2>Tiaraaa? Is that really youu ??</h2>
-    <button onclick="chooseYes()">Yes</button>
-    <button onclick="chooseNo()">No</button>
+  <div id="step1" class="step">
+    <h2>Who are you?</h2>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <br>
+    <button onclick="nextStep(2)">Next</button>
+    <br><br>
+    <img src="insert-meme-1.png" alt="Funny Meme">
   </div>
 
-  <div id="imposter" class="hidden">
-    <h2>IMPOSTER!!! GO AWAY!!!</h2>
-    <div class="meme">
-      <img src="imposter-meme.jpg" alt="Who are you meme" width="300">
-    </div>
+  <div id="step2" class="step hidden">
+    <h2>Are you sure it's really you?</h2>
+    <input type="text" id="confirmName" placeholder="Confirm your name">
+    <br>
+    <button onclick="nextStep(3)">Next</button>
   </div>
 
-  <div id="step3" class="hidden">
-    <h2>Really? Confirm your identity by typing your boyfriend's name:</h2>
-    <input type="text" id="bfNameInput" placeholder="Masukkan nama pacarmu">
-    <button onclick="checkBoyfriend()">Submit</button>
+  <div id="step3" class="step hidden">
+    <h2>What's your boyfriend's name?</h2>
+    <input type="text" id="boyfriendName" placeholder="His name is...">
+    <br>
+    <button onclick="nextStep(4)">Next</button>
   </div>
 
-  <div id="step4" class="hidden">
-    <h2>Woaahhhh, It's really you !!!</h2>
-    <div class="meme">
-      <img src="its-you-meme.gif" alt="Who are you meme" width="300">
-    </div>
-    <h3>I have something for you!! Openn??</h3>
-    <button onclick="showLetter()">YES!!</button>
+  <div id="step4" class="step hidden">
+    <h2>Alright... Click below if you're ready.</h2>
+    <button onclick="nextStep(5)">Reveal the Letter</button>
   </div>
 
-  <div id="letter" class="hidden">
-    <h2>Dear Tiara,</h2>
-    <p>
-      On this beautiful day, I just want to say how incredibly lucky I am to have you.<br>
-      You bring light, laughter, and so much love into my life. Happy 22nd Birthday!<br>
-      Here's to more adventures, dreams, and beautiful moments together.<br><br>
-      Yours always,<br>
-      Endrian 💗
+  <div id="letter" class="step hidden">
+    <h2>💌 A Special Birthday Message 💌</h2>
+    <p id="birthdayMessage">
+      <!-- 📝 TYPE YOUR BIRTHDAY MESSAGE BELOW -->
+      Happy Birthday Tiara! You light up the world with your smile. Here's to more adventures, love, and dreams coming true. I’m so lucky to know you 💖
     </p>
+    <br>
+    <button onclick="startSlides()">View Slideshow</button>
+  </div>
+
+  <div id="slides" class="step hidden">
+    <h2>💫 Memories Together 💫</h2>
+    <img id="slideImage" src="insert-image-1.png" alt="Slide 1">
+    <br>
+    <button onclick="prevSlide()">Previous</button>
+    <button onclick="nextSlideImage()">Next</button>
   </div>
 
   <script>
-    function checkName() {
-      const input = document.getElementById('nameInput').value.trim().toLowerCase();
-      if (input === 'larasati tiara rachim') {
-        document.getElementById('step2').classList.remove('hidden');
-      } else {
-        alert("Hmm... itu bukan nama yang aku cari!");
+    let currentSlide = 0;
+    const slides = [
+      "insert-image-1.png",
+      "insert-image-2.png",
+      "insert-image-3.png",
+      "insert-video-1.mp4", // If using image, change this to image file
+      "insert-image-4.png"
+    ];
+
+    function nextStep(step) {
+      document.querySelectorAll('.step').forEach(div => div.classList.add('hidden'));
+      document.getElementById(`step${step}`) && document.getElementById(`step${step}`).classList.remove('hidden');
+      if (step === 5) {
+        document.getElementById('letter').classList.remove('hidden');
       }
     }
 
-    function chooseYes() {
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('step3').classList.remove('hidden');
+    function startSlides() {
+      document.querySelectorAll('.step').forEach(div => div.classList.add('hidden'));
+      document.getElementById('slides').classList.remove('hidden');
+      showSlide(currentSlide);
     }
 
-    function chooseNo() {
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('imposter').classList.remove('hidden');
-    }
+    function showSlide(index) {
+      const slide = slides[index];
+      const slideElement = document.getElementById('slideImage');
 
-    function checkBoyfriend() {
-      const input = document.getElementById('bfNameInput').value.trim().toLowerCase();
-      const validNames = ['endrian', 'endrian putra', 'endrian putra hendrawan'];
-      if (validNames.includes(input)) {
-        document.getElementById('step3').classList.add('hidden');
-        document.getElementById('step4').classList.remove('hidden');
+      if (slide.endsWith('.mp4')) {
+        slideElement.outerHTML = `
+          <video id="slideImage" width="320" height="240" controls autoplay>
+            <source src="${slide}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        `;
       } else {
-        alert("Salah nama pacar nih 😤");
+        slideElement.outerHTML = `<img id="slideImage" src="${slide}" alt="Slide ${index + 1}">`;
       }
     }
 
-    function showLetter() {
-      document.getElementById('step4').classList.add('hidden');
-      document.getElementById('letter').classList.remove('hidden');
+    function nextSlideImage() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
     }
   </script>
-
 </body>
 </html>

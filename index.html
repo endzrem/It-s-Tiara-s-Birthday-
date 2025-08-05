@@ -28,8 +28,12 @@
       font-size: 16px;
       cursor: pointer;
     }
-    #slides img {
+    #slideContainer {
       max-width: 90%;
+      margin: auto;
+    }
+    img, video {
+      width: 90%;
       height: auto;
     }
   </style>
@@ -56,7 +60,7 @@
   <div id="imposter" class="step hidden">
     <h2>IMPOSTOR!!! GO AWAYY!!</h2>
     <div class="meme">
-        <img src="images/imposter-meme.png" alt="Imposter meme" style="width:100%">
+      <img src="images/imposter-meme.png" alt="Imposter meme" style="width:100%">
     </div>
   </div>
 
@@ -78,7 +82,6 @@
   <div id="letter" class="step hidden">
     <h2>💌 A Special Birthday Message 💌</h2>
     <p id="birthdayMessage">
-      <!-- 📝 TYPE YOUR BIRTHDAY MESSAGE BELOW -->
       Happy Birthday Tiara! You light up the world with your smile. Here's to more adventures, love, and dreams coming true. I’m so lucky to know you 💖
     </p>
     <br>
@@ -87,13 +90,17 @@
 
   <div id="slides" class="step hidden">
     <h2>💫 Memories Together 💫</h2>
-    <img id="slideImage" src="insert-image-1.png" alt="Slide 1">
+    <div id="slideContainer"></div>
     <br>
     <button onclick="prevSlide()">Previous</button>
     <button onclick="nextSlideImage()">Next</button>
   </div>
 
   <script>
+    function hideAllSteps() {
+      document.querySelectorAll('.step').forEach(div => div.classList.add('hidden'));
+    }
+
     function checkName() {
       const input = document.getElementById('nameInput').value.trim().toLowerCase();
       if (input === 'larasati tiara rachim') {
@@ -125,42 +132,47 @@
       }
     }
 
-    let currentSlide = 0;
-    const slides = [
-      "insert-image-1.png",
-      "insert-image-2.png",
-      "insert-image-3.png",
-      "insert-video-1.mp4", // If using image, change this to image file
-      "insert-image-4.png"
-    ];
-
     function nextStep(step) {
-      document.querySelectorAll('.step').forEach(div => div.classList.add('hidden'));
-      document.getElementById(`step${step}`) && document.getElementById(`step${step}`).classList.remove('hidden');
+      hideAllSteps();
+      const stepDiv = document.getElementById(`step${step}`);
+      if (stepDiv) {
+        stepDiv.classList.remove('hidden');
+      }
       if (step === 5) {
         document.getElementById('letter').classList.remove('hidden');
       }
     }
 
+    const slides = [
+      "insert-image-1.png",
+      "insert-image-2.png",
+      "insert-image-3.png",
+      "insert-video-1.mp4",
+      "insert-image-4.png"
+    ];
+
+    let currentSlide = 0;
+
     function startSlides() {
-      document.querySelectorAll('.step').forEach(div => div.classList.add('hidden'));
+      currentSlide = 0;
+      hideAllSteps();
       document.getElementById('slides').classList.remove('hidden');
       showSlide(currentSlide);
     }
 
     function showSlide(index) {
-      const slide = slides[index];
-      const slideElement = document.getElementById('slideImage');
+      const container = document.getElementById('slideContainer');
+      const file = slides[index];
 
-      if (slide.endsWith('.mp4')) {
-        slideElement.outerHTML = `
-          <video id="slideImage" width="320" height="240" controls autoplay>
-            <source src="${slide}" type="video/mp4">
+      if (file.endsWith('.mp4')) {
+        container.innerHTML = `
+          <video controls autoplay>
+            <source src="${file}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
         `;
       } else {
-        slideElement.outerHTML = `<img id="slideImage" src="${slide}" alt="Slide ${index + 1}">`;
+        container.innerHTML = `<img src="${file}" alt="Slide ${index + 1}">`;
       }
     }
 

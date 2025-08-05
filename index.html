@@ -36,6 +36,15 @@
       width: 90%;
       height: auto;
     }
+    .slide-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .slide-body {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -89,7 +98,8 @@
   </div>
 
   <div id="slides" class="step hidden">
-    <h2>💫 Memories Together 💫</h2>
+    <h2 class="slide-title" id="slideTitle"></h2>
+    <p class="slide-body" id="slideText"></p>
     <div id="slideContainer"></div>
     <br>
     <button onclick="prevSlide()">Previous</button>
@@ -144,11 +154,31 @@
     }
 
     const slides = [
-      "insert-image-1.png",
-      "insert-image-2.png",
-      "insert-image-3.png",
-      "insert-video-1.mp4",
-      "insert-image-4.png"
+      {
+        title: "Slide 1: Our First Photo Together",
+        text: "Remember this? The day we randomly took this cute photo. You're so pretty here 🥰",
+        src: "insert-image-1.png"
+      },
+      {
+        title: "Slide 2: Laughs and Chaos",
+        text: "You always know how to make everything fun. My fav moment of us being weird 💃",
+        src: "insert-image-2.png"
+      },
+      {
+        title: "Slide 3: Sweet Notes",
+        text: "Just reminding you how much I adore your smile and kindness 💖",
+        src: "insert-image-3.png"
+      },
+      {
+        title: "Slide 4: Watch This!",
+        text: "Here's something that might make you smile even more 💕",
+        src: "insert-video-1.mp4"
+      },
+      {
+        title: "Slide 5: Happy Birthdayyyy!",
+        text: "Last one for now... just a little wish for your special day. Semoga makin gemoy dan sukses terus yaa ✨",
+        src: "insert-image-4.png"
+      }
     ];
 
     let currentSlide = 0;
@@ -162,17 +192,22 @@
 
     function showSlide(index) {
       const container = document.getElementById('slideContainer');
-      const file = slides[index];
+      const titleEl = document.getElementById('slideTitle');
+      const textEl = document.getElementById('slideText');
+      const slide = slides[index];
 
-      if (file.endsWith('.mp4')) {
+      titleEl.textContent = slide.title;
+      textEl.textContent = slide.text;
+
+      if (slide.src.endsWith('.mp4')) {
         container.innerHTML = `
           <video controls autoplay>
-            <source src="${file}" type="video/mp4">
+            <source src="${slide.src}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
         `;
       } else {
-        container.innerHTML = `<img src="${file}" alt="Slide ${index + 1}">`;
+        container.innerHTML = `<img src="${slide.src}" alt="Slide ${index + 1}">`;
       }
     }
 

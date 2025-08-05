@@ -2,177 +2,114 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday Larasati!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tiara's 22nd Birthday Card</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: #f9f1e7 url('textures/paper-texture.png') repeat;
-      color: #333;
-      overflow: hidden;
-    }
-    .overlay, #card-container { position: fixed; top:0; left:0; width:100%; height:100%; }
-    .overlay {
-      background: rgba(0,0,0,0.8);
-      display: flex; justify-content: center; align-items: center;
-      z-index: 1000;
-      flex-direction: column;
-      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       text-align: center;
-      padding: 20px;
+      padding: 40px;
+      background-color: #fffafc;
     }
-    .overlay h2 { font-size: 2em; margin-bottom: 10px; }
-    .overlay input[type=text] {
-      padding: 8px; font-size: 1em; width: 80%; max-width: 300px;
-      margin-bottom: 10px; border-radius: 4px; border: 2px solid teal;
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
     }
-    .overlay button, .overlay .option-btn {
-      background: teal; color: #fff; border: none;
-      padding: 10px 20px; margin: 5px; cursor: pointer;
-      border-radius: 4px; font-size: 1em;
+    .hidden {
+      display: none;
     }
-    .overlay img.meme { max-width: 60%; margin: 10px auto; display: block; }
-    #card-container { display: none; }
-    /* existing card styling below */
-    #card-container div.decor-left, #card-container div.decor-right {
-      position: absolute; top: 0; pointer-events: none;
-      background-size: contain; background-repeat: no-repeat;
-      width: 15%; height: 100%;
+    .meme {
+      width: 300px;
+      margin: 20px auto;
     }
-    #card-container .decor-left { left: 0; background-image: url('stickers/left-decor.png'); }
-    #card-container .decor-right { right: 0; background-image: url('stickers/right-decor.png'); }
-    #card-container .slide { display: none; width:100%; height:100%; position:relative; }
-    #card-container .slide.active { display: block; }
-    #card-container .slide-content {
-      width: 70%; height: 80%; margin: 0 auto;
-      padding: 20px; background: rgba(255,255,255,0.9);
-      border: 3px dashed #c49f6e; overflow-y:auto;
-      position: relative;
-    }
-    #card-container .tape { width:60px; height:20px; background:url('stickers/tape.png') no-repeat; position:absolute; }
-    #card-container .tape.top-left { top:-10px; left:-10px; transform:rotate(-10deg);} 
-    #card-container .tape.top-right {top:-10px; right:-10px; transform:rotate(10deg);} 
-    #card-container .tape.bottom-left {bottom:-10px; left:-10px; transform:rotate(10deg);} 
-    #card-container .tape.bottom-right {bottom:-10px; right:-10px; transform:rotate(-10deg);} 
-    #card-container button#prevBtn, #card-container button#nextBtn {
-      position:absolute; top:50%; transform:translateY(-50%);
-      background:teal; color:#fff; border:none; width:50px; height:50px;
-      border-radius:50%; font-size:1.2em; cursor:pointer; opacity:0.8;
-    }
-    #card-container button#prevBtn { left:-25px; }
-    #card-container button#nextBtn { right:-25px; }
   </style>
 </head>
 <body>
-  <!-- Multi-step Verification Overlay -->
-  <div id="step1" class="overlay">
-    <h2>STOPPPP!! WHO ARE YOU??!</h2>
-    <p><em>Hint: full name</em></p>
-    <input type="text" id="answer1" placeholder="Type full name here" />
-    <button id="submit1">Submit</button>
-    <img class="meme" id="meme1" src="">
-  </div>
-  <div id="step2" class="overlay" style="display:none;">
+
+  <h1>STOPPPP!! WHO ARE YOU??!</h1>
+  <p>Hint: Nama lengkap</p>
+  <input type="text" id="nameInput" placeholder="Masukkan namamu di sini">
+  <button onclick="checkName()">Submit</button>
+
+  <div id="step2" class="hidden">
+    <div class="meme">
+      <img src="images/who-are-you-meme.jpg" alt="Who are you meme" style="width:100%">
+    </div>
     <h2>Tiaraaa? Is that really youu ??</h2>
-    <button class="option-btn" id="yes2">Yes</button>
-    <button class="option-btn" id="no2">No</button>
-    <img class="meme" id="meme2" src="">
-  </div>
-  <div id="step3" class="overlay" style="display:none;">
-    <h2>Really? Confirm your identity by typing your boyfriend's name:</h2>
-    <input type="text" id="answer3" placeholder="Type name here" />
-    <button id="submit3">Submit</button>
-  </div>
-  <div id="step4" class="overlay" style="display:none;">
-    <h2>Woaahhhh, It's really you !!!</h2>
-    <img class="meme" id="meme4" src="">
-    <p>I have something for you!! Open??</p>
-    <button id="openCard">YES!!</button>
+    <button onclick="chooseYes()">Yes</button>
+    <button onclick="chooseNo()">No</button>
   </div>
 
-  <!-- Main Card Container -->
-  <div id="card-container">
-    <div class="decor-left"></div>
-    <div class="decor-right"></div>
-    <!-- existing slides... -->
-    <!-- (your slide markup here) -->
-    <div class="slide active" data-index="0">
-      <div class="slide-content">
-        <div class="tape top-left"></div>
-        <div class="tape top-right"></div>
-        <h1>Happy Birthday, Larasati!</h1>
-        <p>Dear Tiara,</p>
-        <p><!-- message --></p>
-        <div class="tape bottom-left"></div>
-        <div class="tape bottom-right"></div>
-      </div>
+  <div id="imposter" class="hidden">
+    <h2>IMPOSTER!!! GO AWAY!!!</h2>
+    <div class="meme">
+      <img src="images/imposter-meme.jpg" alt="Imposter meme" style="width:100%">
     </div>
-    <!-- other slides... -->
-    <button id="prevBtn">&#8592;</button>
-    <button id="nextBtn">&#8594;</button>
-    <audio id="bgMusic" src="music/happy-birthday.mp3" loop></audio>
+  </div>
+
+  <div id="step3" class="hidden">
+    <h2>Really? Confirm your identity by typing your boyfriend's name:</h2>
+    <input type="text" id="bfNameInput" placeholder="Masukkan nama pacarmu">
+    <button onclick="checkBoyfriend()">Submit</button>
+  </div>
+
+  <div id="step4" class="hidden">
+    <h2>Woaahhhh, It's really you !!!</h2>
+    <div class="meme">
+      <img src="images/its-you-meme.jpg" alt="It's you meme" style="width:100%">
+    </div>
+    <h3>I have something for you!! Openn??</h3>
+    <button onclick="showLetter()">YES!!</button>
+  </div>
+
+  <div id="letter" class="hidden">
+    <h2>Dear Tiara,</h2>
+    <p>
+      On this beautiful day, I just want to say how incredibly lucky I am to have you.<br>
+      You bring light, laughter, and so much love into my life. Happy 22nd Birthday!<br>
+      Here's to more adventures, dreams, and beautiful moments together.<br><br>
+      Yours always,<br>
+      Endrian 💗
+    </p>
   </div>
 
   <script>
-    (function() {
-      // Step data
-      const fullName = 'larasati tiara rachim';
-      const bfNames = ['endrian', 'endrian putra', 'endrian putra hendrawan'];
-      // Meme placeholders (assign your URLs later)
-      document.getElementById('meme1').src = 'memes/meme1.png';
-      document.getElementById('meme2').src = 'memes/meme2.png';
-      document.getElementById('meme4').src = 'memes/meme4.png';
+    function checkName() {
+      const input = document.getElementById('nameInput').value.trim().toLowerCase();
+      if (input === 'larasati tiara rachim') {
+        document.getElementById('step2').classList.remove('hidden');
+      } else {
+        alert("Hmm... itu bukan nama yang aku cari!");
+      }
+    }
 
-      // Step 1
-      document.getElementById('submit1').addEventListener('click', ()=>{
-        const ans = document.getElementById('answer1').value.trim().toLowerCase();
-        if(ans === fullName) {
-          document.getElementById('step1').style.display='none';
-          document.getElementById('step2').style.display='flex';
-        } else alert('Incorrect name!');
-      });
+    function chooseYes() {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step3').classList.remove('hidden');
+    }
 
-      // Step 2
-      document.getElementById('no2').addEventListener('click', ()=>{
-        alert('IMPOSTER!!! GO AWAY!!!');
-        location.reload();
-      });
-      document.getElementById('yes2').addEventListener('click', ()=>{
-        document.getElementById('step2').style.display='none';
-        document.getElementById('step3').style.display='flex';
-      });
+    function chooseNo() {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('imposter').classList.remove('hidden');
+    }
 
-      // Step 3
-      document.getElementById('submit3').addEventListener('click', ()=>{
-        const a3 = document.getElementById('answer3').value.trim().toLowerCase();
-        if(bfNames.includes(a3)) {
-          document.getElementById('step3').style.display='none';
-          document.getElementById('step4').style.display='flex';
-        } else alert('That's not the right name!');
-      });
+    function checkBoyfriend() {
+      const input = document.getElementById('bfNameInput').value.trim().toLowerCase();
+      const validNames = ['endrian', 'endrian putra', 'endrian putra hendrawan'];
+      if (validNames.includes(input)) {
+        document.getElementById('step3').classList.add('hidden');
+        document.getElementById('step4').classList.remove('hidden');
+      } else {
+        alert("Salah nama pacar nih 😤");
+      }
+    }
 
-      // Step 4
-      document.getElementById('openCard').addEventListener('click', ()=>{
-        document.getElementById('step4').style.display='none';
-        document.getElementById('card-container').style.display='block';
-        document.getElementById('bgMusic').play().catch(()=>{});
-      });
-
-      // Slide nav
-      let current = 0;
-      const slides = document.querySelectorAll('#card-container .slide');
-      document.getElementById('prevBtn').addEventListener('click', ()=>{
-        current = (current>0?current-1:slides.length-1);
-        slides.forEach(s=>s.classList.remove('active'));
-        slides[current].classList.add('active');
-      });
-      document.getElementById('nextBtn').addEventListener('click', ()=>{
-        current = (current<slides.length-1?current+1:0);
-        slides.forEach(s=>s.classList.remove('active'));
-        slides[current].classList.add('active');
-      });
-    })();
+    function showLetter() {
+      document.getElementById('step4').classList.add('hidden');
+      document.getElementById('letter').classList.remove('hidden');
+    }
   </script>
+
 </body>
 </html>

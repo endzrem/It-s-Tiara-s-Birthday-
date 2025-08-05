@@ -39,11 +39,12 @@
   <div id="step1" class="step">
     <h2>STOPPPPPPP!! WHO ARE YOU??!</h2>
     <p>Hint: Nama lengkap</p>
+    <div class="meme">
+      <img src="images/who-are-you-meme.jpg" alt="It's you meme" style="width:20%">
+    </div>
     <input type="text" id="nameInput" placeholder="Enter your name">
     <br>
     <button onclick="checkName()">Submit</button>
-    <br><br>
-    <img src="who-are-you-meme.jpg" alt="who are you">
   </div>
 
   <div id="step2" class="step hidden">
@@ -96,28 +97,28 @@
     function checkName() {
       const input = document.getElementById('nameInput').value.trim().toLowerCase();
       if (input === 'larasati tiara rachim') {
-        document.getElementById('step2').classList.remove('hidden');
+        document.getElementById('step2').classList.remove('step hidden');
       } else {
         alert("HAH? WHO ARE YOU? I DONT KNOW YOU!!");
       }
     }
 
     function chooseYes() {
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('step3').classList.remove('hidden');
+      document.getElementById('step2').classList.add('step hidden');
+      document.getElementById('step3').classList.remove('step hidden');
     }
 
     function chooseNo() {
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('imposter').classList.remove('hidden');
+      document.getElementById('step2').classList.add('step hidden');
+      document.getElementById('imposter').classList.remove('step hidden');
     }
 
     function checkBoyfriend() {
       const input = document.getElementById('bfNameInput').value.trim().toLowerCase();
       const validNames = ['endrian', 'endrian putra', 'endrian putra hendrawan'];
       if (validNames.includes(input)) {
-        document.getElementById('step3').classList.add('hidden');
-        document.getElementById('step4').classList.remove('hidden');
+        document.getElementById('step3').classList.add('step hidden');
+        document.getElementById('step4').classList.remove('step hidden');
       } else {
         alert("Nama siapa itu? Hayo ngaku!! 😤");
       }

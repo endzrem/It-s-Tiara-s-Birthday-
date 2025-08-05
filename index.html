@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Larasati!</title>
+  <style>
+    /* Basic reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #f9f1e7 url('textures/paper-texture.png') repeat;
+      color: #333;
+      overflow: hidden;
+    }
+    /* Overlay password screen */
+    #lock-screen {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 999;
+    }
+    #lock-screen .box {
+      background: #fff;
+      border: 4px dashed #ccc;
+      padding: 20px; width: 300px; text-align: center;
+      position: relative;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    #lock-screen .box h2 { margin-bottom: 10px; color: teal; }
+    #lock-screen input[type=password] {
+      width: 100%; padding: 8px; margin-bottom: 10px;
+      border: 2px solid teal; border-radius: 4px;
+    }
+    #lock-screen button {
+      background: teal; color: #fff; border: none;
+      padding: 8px 16px; cursor: pointer; border-radius: 4px;
+    }
+    /* Main content */
+    #card-container {
+      display: none;
+      position: relative;
+      width: 90vw; height: 90vh;
+      margin: 5vh auto;
+      background: #fff;
+      border: 8px solid #f0e5d8;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    /* Decoration areas */
+    .decor-left, .decor-right {
+      position: absolute; top: 0;
+      width: 15%; height: 100%;
+      pointer-events: none;
+      /* Placeholder backgrounds for decoration */
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .decor-left { left: 0; background-image: url('stickers/left-decor.png'); }
+    .decor-right { right: 0; background-image: url('stickers/right-decor.png'); }
+    /* Slides */
+    .slide {
+      display: none;
+      width: 100%; height: 100%;
+      position: relative;
+    }
+    .slide.active { display: block; }
+    .slide-content {
+      width: 70%; height: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.9);
+      border: 3px dashed #c49f6e;
+      position: relative;
+      overflow-y: auto;
+    }
+    /* Tape corners */
+    .tape {
+      width: 60px; height: 20px;
+      background: url('stickers/tape.png') no-repeat;
+      position: absolute;
+    }
+    .tape.top-left { top: -10px; left: -10px; transform: rotate(-10deg); }
+    .tape.top-right { top: -10px; right: -10px; transform: rotate(10deg); }
+    .tape.bottom-left { bottom: -10px; left: -10px; transform: rotate(10deg); }
+    .tape.bottom-right { bottom: -10px; right: -10px; transform: rotate(-10deg); }
+    /* Navigation */
+    #prevBtn, #nextBtn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: teal; color: #fff;
+      border: none; padding: 10px;
+      cursor: pointer; font-size: 1.2em;
+      border-radius: 50%;
+      width: 50px; height: 50px;
+      opacity: 0.8;
+    }
+    #prevBtn { left: -25px; }
+    #nextBtn { right: -25px; }
+  </style>
+</head>
+<body>
+  <!-- Lock / Password Screen -->
+  <div id="lock-screen">
+    <div class="box">
+      <h2>Open Your Letter</h2>
+      <input type="password" id="pwdInput" placeholder="Enter password" />
+      <button id="unlockBtn">Unlock</button>
+      <!-- You can change the password below in script -->
+    </div>
+  </div>
+
+  <!-- Main Card Container -->
+  <div id="card-container">
+    <div class="decor-left"></div>
+    <div class="decor-right"></div>
+
+    <!-- Slide 1 -->
+    <div class="slide active" data-index="0">
+      <div class="slide-content">
+        <div class="tape top-left"></div>
+        <div class="tape top-right"></div>
+        <h1>Happy Birthday, Larasati!</h1>
+        <p>Dear Tiara,</p>
+        <p><!-- Your heartfelt message here... --></p>
+        <div class="tape bottom-left"></div>
+        <div class="tape bottom-right"></div>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="slide" data-index="1">
+      <div class="slide-content">
+        <div class="tape top-left"></div>
+        <h2>Your Journey</h2>
+        <p><!-- Talk about her passions, future doctor dreams --></p>
+        <div class="tape bottom-right"></div>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="slide" data-index="2">
+      <div class="slide-content">
+        <div class="tape top-right"></div>
+        <h2>Memories &amp; Fun</h2>
+        <p><!-- Reflect on your favorite moments together --></p>
+        <div class="tape bottom-left"></div>
+      </div>
+    </div>
+    <!-- Slide 4 -->
+    <div class="slide" data-index="3">
+      <div class="slide-content">
+        <h2>Wishes &amp; Love</h2>
+        <p><!-- Your wishes for her --></p>
+      </div>
+    </div>
+    <!-- Slide 5 -->
+    <div class="slide" data-index="4">
+      <div class="slide-content">
+        <h2>Much Love,</h2>
+        <p>-- Your Name --</p>
+      </div>
+    </div>
+
+    <button id="prevBtn">&#8592;</button>
+    <button id="nextBtn">&#8594;</button>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" src="music/happy-birthday.mp3" loop></audio>
+  </div>
+
+  <script>
+    (function() {
+      const password = '6aug2003'; // default, change as needed
+      const lockScreen = document.getElementById('lock-screen');
+      const unlockBtn = document.getElementById('unlockBtn');
+      const pwdInput = document.getElementById('pwdInput');
+      const card = document.getElementById('card-container');
+      const music = document.getElementById('bgMusic');
+
+      unlockBtn.addEventListener('click', () => {
+        if (pwdInput.value === password) {
+          lockScreen.style.display = 'none';
+          card.style.display = 'block';
+          music.play().catch(e => console.warn('Autoplay blocked'));
+        } else {
+          alert('Incorrect password!');
+          pwdInput.value = '';
+        }
+      });
+
+      // Slide navigation
+      let current = 0;
+      const slides = document.querySelectorAll('.slide');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      function updateSlides(idx) {
+        slides.forEach(s => s.classList.remove('active'));
+        slides[idx].classList.add('active');
+      }
+
+      prevBtn.addEventListener('click', () => {
+        current = (current > 0) ? current - 1 : slides.length - 1;
+        updateSlides(current);
+      });
+      nextBtn.addEventListener('click', () => {
+        current = (current < slides.length - 1) ? current + 1 : 0;
+        updateSlides(current);
+      });
+
+      // Optionally, allow Enter key to unlock
+      pwdInput.addEventListener('keyup', e => e.key === 'Enter' && unlockBtn.click());
+    })();
+  </script>
+</body>
+</html>

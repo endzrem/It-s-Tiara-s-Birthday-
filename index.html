@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Larasati!</title>
   <style>
-    /* Basic reset */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -13,202 +12,166 @@
       color: #333;
       overflow: hidden;
     }
-    /* Overlay password screen */
-    #lock-screen {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
+    .overlay, #card-container { position: fixed; top:0; left:0; width:100%; height:100%; }
+    .overlay {
+      background: rgba(0,0,0,0.8);
       display: flex; justify-content: center; align-items: center;
-      z-index: 999;
-    }
-    #lock-screen .box {
-      background: #fff;
-      border: 4px dashed #ccc;
-      padding: 20px; width: 300px; text-align: center;
-      position: relative;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-    #lock-screen .box h2 { margin-bottom: 10px; color: teal; }
-    #lock-screen input[type=password] {
-      width: 100%; padding: 8px; margin-bottom: 10px;
-      border: 2px solid teal; border-radius: 4px;
-    }
-    #lock-screen button {
-      background: teal; color: #fff; border: none;
-      padding: 8px 16px; cursor: pointer; border-radius: 4px;
-    }
-    /* Main content */
-    #card-container {
-      display: none;
-      position: relative;
-      width: 90vw; height: 90vh;
-      margin: 5vh auto;
-      background: #fff;
-      border: 8px solid #f0e5d8;
-      padding: 40px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    }
-    /* Decoration areas */
-    .decor-left, .decor-right {
-      position: absolute; top: 0;
-      width: 15%; height: 100%;
-      pointer-events: none;
-      /* Placeholder backgrounds for decoration */
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-    .decor-left { left: 0; background-image: url('stickers/left-decor.png'); }
-    .decor-right { right: 0; background-image: url('stickers/right-decor.png'); }
-    /* Slides */
-    .slide {
-      display: none;
-      width: 100%; height: 100%;
-      position: relative;
-    }
-    .slide.active { display: block; }
-    .slide-content {
-      width: 70%; height: 80%;
-      margin: 0 auto;
+      z-index: 1000;
+      flex-direction: column;
+      color: #fff;
+      text-align: center;
       padding: 20px;
-      background: rgba(255,255,255,0.9);
-      border: 3px dashed #c49f6e;
+    }
+    .overlay h2 { font-size: 2em; margin-bottom: 10px; }
+    .overlay input[type=text] {
+      padding: 8px; font-size: 1em; width: 80%; max-width: 300px;
+      margin-bottom: 10px; border-radius: 4px; border: 2px solid teal;
+    }
+    .overlay button, .overlay .option-btn {
+      background: teal; color: #fff; border: none;
+      padding: 10px 20px; margin: 5px; cursor: pointer;
+      border-radius: 4px; font-size: 1em;
+    }
+    .overlay img.meme { max-width: 60%; margin: 10px auto; display: block; }
+    #card-container { display: none; }
+    /* existing card styling below */
+    #card-container div.decor-left, #card-container div.decor-right {
+      position: absolute; top: 0; pointer-events: none;
+      background-size: contain; background-repeat: no-repeat;
+      width: 15%; height: 100%;
+    }
+    #card-container .decor-left { left: 0; background-image: url('stickers/left-decor.png'); }
+    #card-container .decor-right { right: 0; background-image: url('stickers/right-decor.png'); }
+    #card-container .slide { display: none; width:100%; height:100%; position:relative; }
+    #card-container .slide.active { display: block; }
+    #card-container .slide-content {
+      width: 70%; height: 80%; margin: 0 auto;
+      padding: 20px; background: rgba(255,255,255,0.9);
+      border: 3px dashed #c49f6e; overflow-y:auto;
       position: relative;
-      overflow-y: auto;
     }
-    /* Tape corners */
-    .tape {
-      width: 60px; height: 20px;
-      background: url('stickers/tape.png') no-repeat;
-      position: absolute;
+    #card-container .tape { width:60px; height:20px; background:url('stickers/tape.png') no-repeat; position:absolute; }
+    #card-container .tape.top-left { top:-10px; left:-10px; transform:rotate(-10deg);} 
+    #card-container .tape.top-right {top:-10px; right:-10px; transform:rotate(10deg);} 
+    #card-container .tape.bottom-left {bottom:-10px; left:-10px; transform:rotate(10deg);} 
+    #card-container .tape.bottom-right {bottom:-10px; right:-10px; transform:rotate(-10deg);} 
+    #card-container button#prevBtn, #card-container button#nextBtn {
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:teal; color:#fff; border:none; width:50px; height:50px;
+      border-radius:50%; font-size:1.2em; cursor:pointer; opacity:0.8;
     }
-    .tape.top-left { top: -10px; left: -10px; transform: rotate(-10deg); }
-    .tape.top-right { top: -10px; right: -10px; transform: rotate(10deg); }
-    .tape.bottom-left { bottom: -10px; left: -10px; transform: rotate(10deg); }
-    .tape.bottom-right { bottom: -10px; right: -10px; transform: rotate(-10deg); }
-    /* Navigation */
-    #prevBtn, #nextBtn {
-      position: absolute; top: 50%; transform: translateY(-50%);
-      background: teal; color: #fff;
-      border: none; padding: 10px;
-      cursor: pointer; font-size: 1.2em;
-      border-radius: 50%;
-      width: 50px; height: 50px;
-      opacity: 0.8;
-    }
-    #prevBtn { left: -25px; }
-    #nextBtn { right: -25px; }
+    #card-container button#prevBtn { left:-25px; }
+    #card-container button#nextBtn { right:-25px; }
   </style>
 </head>
 <body>
-  <!-- Lock / Password Screen -->
-  <div id="lock-screen">
-    <div class="box">
-      <h2>Open Your Letter</h2>
-      <input type="password" id="pwdInput" placeholder="Enter password" />
-      <button id="unlockBtn">Unlock</button>
-      <!-- You can change the password below in script -->
-    </div>
+  <!-- Multi-step Verification Overlay -->
+  <div id="step1" class="overlay">
+    <h2>STOPPPP!! WHO ARE YOU??!</h2>
+    <p><em>Hint: full name</em></p>
+    <input type="text" id="answer1" placeholder="Type full name here" />
+    <button id="submit1">Submit</button>
+    <img class="meme" id="meme1" src="">
+  </div>
+  <div id="step2" class="overlay" style="display:none;">
+    <h2>Tiaraaa? Is that really youu ??</h2>
+    <button class="option-btn" id="yes2">Yes</button>
+    <button class="option-btn" id="no2">No</button>
+    <img class="meme" id="meme2" src="">
+  </div>
+  <div id="step3" class="overlay" style="display:none;">
+    <h2>Really? Confirm your identity by typing your boyfriend's name:</h2>
+    <input type="text" id="answer3" placeholder="Type name here" />
+    <button id="submit3">Submit</button>
+  </div>
+  <div id="step4" class="overlay" style="display:none;">
+    <h2>Woaahhhh, It's really you !!!</h2>
+    <img class="meme" id="meme4" src="">
+    <p>I have something for you!! Open??</p>
+    <button id="openCard">YES!!</button>
   </div>
 
   <!-- Main Card Container -->
   <div id="card-container">
     <div class="decor-left"></div>
     <div class="decor-right"></div>
-
-    <!-- Slide 1 -->
+    <!-- existing slides... -->
+    <!-- (your slide markup here) -->
     <div class="slide active" data-index="0">
       <div class="slide-content">
         <div class="tape top-left"></div>
         <div class="tape top-right"></div>
         <h1>Happy Birthday, Larasati!</h1>
         <p>Dear Tiara,</p>
-        <p><!-- Your heartfelt message here... --></p>
+        <p><!-- message --></p>
         <div class="tape bottom-left"></div>
         <div class="tape bottom-right"></div>
       </div>
     </div>
-    <!-- Slide 2 -->
-    <div class="slide" data-index="1">
-      <div class="slide-content">
-        <div class="tape top-left"></div>
-        <h2>Your Journey</h2>
-        <p><!-- Talk about her passions, future doctor dreams --></p>
-        <div class="tape bottom-right"></div>
-      </div>
-    </div>
-    <!-- Slide 3 -->
-    <div class="slide" data-index="2">
-      <div class="slide-content">
-        <div class="tape top-right"></div>
-        <h2>Memories &amp; Fun</h2>
-        <p><!-- Reflect on your favorite moments together --></p>
-        <div class="tape bottom-left"></div>
-      </div>
-    </div>
-    <!-- Slide 4 -->
-    <div class="slide" data-index="3">
-      <div class="slide-content">
-        <h2>Wishes &amp; Love</h2>
-        <p><!-- Your wishes for her --></p>
-      </div>
-    </div>
-    <!-- Slide 5 -->
-    <div class="slide" data-index="4">
-      <div class="slide-content">
-        <h2>Much Love,</h2>
-        <p>-- Your Name --</p>
-      </div>
-    </div>
-
+    <!-- other slides... -->
     <button id="prevBtn">&#8592;</button>
     <button id="nextBtn">&#8594;</button>
-
-    <!-- Background Music -->
     <audio id="bgMusic" src="music/happy-birthday.mp3" loop></audio>
   </div>
 
   <script>
     (function() {
-      const password = '6aug2003'; // default, change as needed
-      const lockScreen = document.getElementById('lock-screen');
-      const unlockBtn = document.getElementById('unlockBtn');
-      const pwdInput = document.getElementById('pwdInput');
-      const card = document.getElementById('card-container');
-      const music = document.getElementById('bgMusic');
+      // Step data
+      const fullName = 'larasati tiara rachim';
+      const bfNames = ['endrian', 'endrian putra', 'endrian putra hendrawan'];
+      // Meme placeholders (assign your URLs later)
+      document.getElementById('meme1').src = 'memes/meme1.png';
+      document.getElementById('meme2').src = 'memes/meme2.png';
+      document.getElementById('meme4').src = 'memes/meme4.png';
 
-      unlockBtn.addEventListener('click', () => {
-        if (pwdInput.value === password) {
-          lockScreen.style.display = 'none';
-          card.style.display = 'block';
-          music.play().catch(e => console.warn('Autoplay blocked'));
-        } else {
-          alert('Incorrect password!');
-          pwdInput.value = '';
-        }
+      // Step 1
+      document.getElementById('submit1').addEventListener('click', ()=>{
+        const ans = document.getElementById('answer1').value.trim().toLowerCase();
+        if(ans === fullName) {
+          document.getElementById('step1').style.display='none';
+          document.getElementById('step2').style.display='flex';
+        } else alert('Incorrect name!');
       });
 
-      // Slide navigation
+      // Step 2
+      document.getElementById('no2').addEventListener('click', ()=>{
+        alert('IMPOSTER!!! GO AWAY!!!');
+        location.reload();
+      });
+      document.getElementById('yes2').addEventListener('click', ()=>{
+        document.getElementById('step2').style.display='none';
+        document.getElementById('step3').style.display='flex';
+      });
+
+      // Step 3
+      document.getElementById('submit3').addEventListener('click', ()=>{
+        const a3 = document.getElementById('answer3').value.trim().toLowerCase();
+        if(bfNames.includes(a3)) {
+          document.getElementById('step3').style.display='none';
+          document.getElementById('step4').style.display='flex';
+        } else alert('That's not the right name!');
+      });
+
+      // Step 4
+      document.getElementById('openCard').addEventListener('click', ()=>{
+        document.getElementById('step4').style.display='none';
+        document.getElementById('card-container').style.display='block';
+        document.getElementById('bgMusic').play().catch(()=>{});
+      });
+
+      // Slide nav
       let current = 0;
-      const slides = document.querySelectorAll('.slide');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-
-      function updateSlides(idx) {
-        slides.forEach(s => s.classList.remove('active'));
-        slides[idx].classList.add('active');
-      }
-
-      prevBtn.addEventListener('click', () => {
-        current = (current > 0) ? current - 1 : slides.length - 1;
-        updateSlides(current);
+      const slides = document.querySelectorAll('#card-container .slide');
+      document.getElementById('prevBtn').addEventListener('click', ()=>{
+        current = (current>0?current-1:slides.length-1);
+        slides.forEach(s=>s.classList.remove('active'));
+        slides[current].classList.add('active');
       });
-      nextBtn.addEventListener('click', () => {
-        current = (current < slides.length - 1) ? current + 1 : 0;
-        updateSlides(current);
+      document.getElementById('nextBtn').addEventListener('click', ()=>{
+        current = (current<slides.length-1?current+1:0);
+        slides.forEach(s=>s.classList.remove('active'));
+        slides[current].classList.add('active');
       });
-
-      // Optionally, allow Enter key to unlock
-      pwdInput.addEventListener('keyup', e => e.key === 'Enter' && unlockBtn.click());
     })();
   </script>
 </body>

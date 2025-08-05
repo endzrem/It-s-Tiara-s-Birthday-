@@ -97,7 +97,8 @@
     function checkName() {
       const input = document.getElementById('nameInput').value.trim().toLowerCase();
       if (input === 'larasati tiara rachim') {
-        document.getElementById('step2').classList.remove('step hidden');
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
       } else {
         alert("HAH? WHO ARE YOU? I DONT KNOW YOU!!");
       }
